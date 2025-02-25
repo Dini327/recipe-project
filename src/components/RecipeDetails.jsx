@@ -5,14 +5,12 @@ const RecipeDetails = () => {
   const [recipe, setRecipe] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-   const { _id } = useParams();
-  // const{id}=useParams()
+  const { recipeId } = useParams();
 
   const loadRecipe = async () => {
-    console.log("in func");
     try {
       setIsLoading(true);
-      const data = await getRecipeById(_id);
+      const data = await getRecipeById(recipeId);
       setRecipe(data);
     } catch (err) {
       setError(err);
@@ -22,11 +20,10 @@ const RecipeDetails = () => {
   };
 
   useEffect(() => {
-    console.log(_id);
-    _id && loadRecipe();
-  }, []);
+    recipeId && loadRecipe();
+  }, [recipeId]);
+
   return (
-    <>
     <div
       style={{
         maxWidth: "600px",
@@ -207,9 +204,7 @@ const RecipeDetails = () => {
       )}
       <Link to={`/recipes`}>View All</Link>
     </div>
-    </>
   );
 };
-
 
 export default RecipeDetails;

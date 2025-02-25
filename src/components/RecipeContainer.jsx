@@ -20,7 +20,6 @@ const RecipeContainer = () => {
   const [error, setError] = useState("");
   const [formMode, setFormMode] = useState(FORM_MODES_OPTIONS.None);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const[id,setId]=useState()
 
   useEffect(() => {
     fetchingData();
@@ -40,29 +39,22 @@ const RecipeContainer = () => {
 
   const handleCancel = () => {
     setFormMode(FORM_MODES_OPTIONS.None);
+    setSelectedRecipe(null);
   };
 
   const handleFormSubmit = async (recipe) => {
     if (formMode === FORM_MODES_OPTIONS.Create) {
       insertRecipe(recipe);
     } else {
-      recipe._id=id;
       editRecipe(recipe);
     }
-     setFormMode(FORM_MODES_OPTIONS.None);
+    setFormMode(FORM_MODES_OPTIONS.None);
   };
-  // const handleFormSubmit=async(r) =>{
-  //   console.log("in handleFormSubmit");
-  //   insertRecipe(r);
-  // }
 
   const insertRecipe = async (recipe) => {
     try {
-      console.log("in insertRecipe");
       const response = await createRecipe(recipe);
-      console.log("after insertRecipe");
       setRecipes([...recipes, response]);
-      console.log(recipes);
     } catch (error) {
       setError(error);
     }
@@ -70,9 +62,13 @@ const RecipeContainer = () => {
 
   const editRecipe = async (recipe) => {
     try {
-      console.log("id :",recipe._id);
       const updatedRecipe = await updateRecipe(recipe._id, recipe);
-      const updatedRecipeList = recipes.map(r =>r._id === recipe._id ?updatedRecipe:r);
+      const updatedRecipeList = recipes.map((r) => {
+        if (r._id === recipe._id) {
+          return updatedRecipe;
+        }
+        return r;
+      });
       setRecipes(updatedRecipeList);
     } catch (error) {
       setError(error);
@@ -80,9 +76,8 @@ const RecipeContainer = () => {
   };
 
   const handleRecipeEdit = (selectedRecipe) => {
-     setFormMode(FORM_MODES_OPTIONS.Edit);
-     setSelectedRecipe(selectedRecipe);
-     setId(selectedRecipe._id)
+    setFormMode(FORM_MODES_OPTIONS.Edit);
+    setSelectedRecipe(selectedRecipe);
   };
 
   const handleRecipeDelete = async (id) => {
@@ -93,6 +88,7 @@ const RecipeContainer = () => {
       setError(error);
     }
   };
+
   return (
     <div>
       {loading ? (

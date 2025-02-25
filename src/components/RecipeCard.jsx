@@ -1,11 +1,8 @@
 import { Link } from "react-router";
-import { Route } from "react-router-dom";
 
 const RecipeCard = ({ recipe, onEdit, onDelete }) => {
   const { _id, title, preparationTime, difficulty, isKosher } = recipe;
-  // const r={_id:recipe._id,title:recipe.title,preparationTime:recipe.preparationTime,difficulty:recipe.difficulty,isKosher:recipe.isKosher}
   return (
-    <>
     <div
       style={{
         border: "1px solid #e0e0e0",
@@ -80,8 +77,7 @@ const RecipeCard = ({ recipe, onEdit, onDelete }) => {
           Edit
         </button>
         <button
-          // onClick={onDelete(_id)}
-          onClick={()=>onDelete(_id)}
+          onClick={() => onDelete(_id)}
           style={{
             padding: "5px 10px",
             backgroundColor: "#f44336",
@@ -94,6 +90,7 @@ const RecipeCard = ({ recipe, onEdit, onDelete }) => {
           Delete
         </button>
       </div>
+
       <Link
         to={`/recipes/${_id}`}
         style={{
@@ -107,7 +104,6 @@ const RecipeCard = ({ recipe, onEdit, onDelete }) => {
         View Recipe Details
       </Link>
     </div>
-    </>
   );
 };
 

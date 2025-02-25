@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FORM_MODES_OPTIONS } from "./RecipeContainer";
 
-
 const DIFFICULTY_OPTIONS = { Easy: "Easy", Medium: "Medium", Hard: "Hard" };
 
 const FormDetails = ({ selectedRecipe, onSubmit, onCancel, formMode }) => {
@@ -26,8 +25,7 @@ const FormDetails = ({ selectedRecipe, onSubmit, onCancel, formMode }) => {
   };
   const addIngredient = (e) => {
     e.preventDefault();
-    // setIngredients([ingredients, ""]);
-    setIngredients([...ingredients,e.target.value]);
+    setIngredients([...ingredients, ""]);
   };
 
   const removeIngredient = (indexToRemove, e) => {
@@ -36,35 +34,23 @@ const FormDetails = ({ selectedRecipe, onSubmit, onCancel, formMode }) => {
   };
 
   const handleFormSubmit = (e) => {
-     e.preventDefault();
-    // const reciptDetails = {
-    //   ...selectedRecipe,
-    //   title,
-    //   ingredients,
-    //   instructions,
-    //   preparationTime,
-    //   difficulty,
-    //   isKosher,
-    // };
+    e.preventDefault();
     const reciptDetails = {
-      selectedRecipe:selectedRecipe,
-      title:title,
-      ingredients:ingredients,
-      instructions:instructions,
-      preparationTime:preparationTime,
-      difficulty:difficulty,
-      isKosher:isKosher,
+      ...selectedRecipe,
+      title,
+      ingredients,
+      instructions,
+      preparationTime,
+      difficulty,
+      isKosher,
     };
-    console.log(reciptDetails); 
     onSubmit(reciptDetails);
-    console.log("after calling to submit");
     setTitle("");
     setIngredients([]);
     setInstructions("");
     setPreparationTime(1);
     setDifficulty(DIFFICULTY_OPTIONS.Easy);
     setIsKosher(false);
-    console.log("after calling2 to submit");
   };
 
   const handleCancel = () => {
@@ -95,8 +81,7 @@ const FormDetails = ({ selectedRecipe, onSubmit, onCancel, formMode }) => {
         <input
           type="text"
           placeholder="Recipe Title"
-          // onChange={(e) => (title = e.target.value)}
-          onChange={e=>{setTitle(e.target.value)}}
+          onChange={(e) => setTitle(e.target.value)}
           value={title}
           style={{
             padding: "10px",
@@ -181,7 +166,7 @@ const FormDetails = ({ selectedRecipe, onSubmit, onCancel, formMode }) => {
             type="number"
             placeholder="Preparation Time"
             onChange={(e) => setPreparationTime(e.target.value)}
-            // value={preparationTime}
+            value={preparationTime}
             style={{
               padding: "10px",
               borderRadius: "4px",
